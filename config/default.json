@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://Dinesh:Dinesh123@to-do-jmw70.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://Dinesh:Dinesh123@to-do-jmw70.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
 }
