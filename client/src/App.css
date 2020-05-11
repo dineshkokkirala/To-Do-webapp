@@ -48,6 +48,13 @@ img {
   padding: 0 1rem;
 }
 
+.form-container {
+  max-width: 800px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
 /* Text Styles*/
 .x-large {
   font-size: 4rem;

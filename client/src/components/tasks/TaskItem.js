@@ -12,6 +12,9 @@ const TaskItem = ({ eachtask }) => {
     taskContext.clearCurrent();
   };
 
+  /*const di = new DateDiff(date, expires);
+  console.log(di.days());*/
+
   return (
     <div className={"card bg-" + (percentage < 100 ? "light" : "success")}>
       <h3 className="text-primary text-left">
@@ -34,7 +37,7 @@ const TaskItem = ({ eachtask }) => {
         {expires}
         <br />
         {percentage && (
-          <li>
+          <li className={percentage <= 10 && "text-danger"}>
             <strong>Progress: </strong>
             {percentage}%
           </li>
