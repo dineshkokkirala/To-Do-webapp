@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import TaskContext from "./taskContext";
 import taskReducer from "./taskReducer";
 import uuid from "react-uuid";
+import axios from "axios";
 
 import {
   ADD_TASK,
@@ -13,45 +14,32 @@ import {
   FILTER_TASKS,
   CLEAR_FILTER,
   CLEAR_TASKS,
+  TASK_ERROR,
 } from "../types";
 
 const TaskState = (props) => {
   const initialState = {
-    tasks: [
-      {
-        id: 1,
-        task: "Front-end complete",
-        type: "personal",
-        expires: "02-11-2020",
-        date: "30-10-2020",
-        percentage: 45,
-      },
-      {
-        id: 2,
-        task: "Back-end complete",
-        type: "professional",
-        expires: "12-05-2020",
-        date: "30-01-2020",
-        percentage: 100,
-      },
-      {
-        id: 3,
-        task: "website complete",
-        type: "personal",
-        expires: "02-11-2020",
-        date: "3-10-2020",
-        percentage: 88,
-      },
-    ],
+    tasks: null,
     current: null,
     filtered: null,
+    error: null,
   };
 
   const [state, dispatch] = useReducer(taskReducer, initialState);
 
+  //get tasks
+  const getTasks = async (work) => {
+    try {
+      const res = await axios.get("/api/tasks");
+      dispatch({ type: GET_TASKS, payload: res.data });
+    } catch (err) {
+      dispatch({ type: TASK_ERROR, payload: err.response.msg });
+    }
+  };
+
   //Add task
-  const addTask = (work) => {
-    work.id = uuid();
+  const addTask = async (work) => {
+    // work.id = uuid();
     var today = new Date();
     var dd = today.getDate();
 
@@ -65,12 +53,32 @@ const TaskState = (props) => {
       mm = "0" + mm;
     }
     work.date = yyyy + "-" + mm + "-" + dd;
-    dispatch({ type: ADD_TASK, payload: work });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post("/api/tasks", work, config);
+      dispatch({ type: ADD_TASK, payload: res.data });
+    } catch (err) {
+      dispatch({ type: TASK_ERROR, payload: err.response.msg });
+    }
   };
 
   //Delete task
-  const deleteTask = (id) => {
-    dispatch({ type: DELETE_TASK, payload: id });
+  const deleteTask = async (id) => {
+    try {
+      const res = await axios.delete(`/api/tasks/${id}`);
+      dispatch({ type: DELETE_TASK, payload: id });
+    } catch (err) {
+      dispatch({ type: TASK_ERROR, payload: err.response.msg });
+    }
+  };
+
+  //clear tasks
+  const clearTasks = () => {
+    dispatch({ type: CLEAR_TASKS });
   };
 
   //set current task
@@ -84,8 +92,18 @@ const TaskState = (props) => {
   };
 
   //update task
-  const updateTask = (task) => {
-    dispatch({ type: UPDATE_TASK, payload: task });
+  const updateTask = async (work) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.put(`/api/tasks/${work._id}`, work, config);
+      dispatch({ type: UPDATE_TASK, payload: res.data });
+    } catch (err) {
+      dispatch({ type: TASK_ERROR, payload: err.response.msg });
+    }
   };
 
   //filter tasks
@@ -104,6 +122,7 @@ const TaskState = (props) => {
         tasks: state.tasks,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addTask,
         deleteTask,
         setCurrent,
@@ -111,6 +130,8 @@ const TaskState = (props) => {
         updateTask,
         filterTasks,
         clearFilter,
+        getTasks,
+        clearTasks,
       }}
     >
       {props.children}
