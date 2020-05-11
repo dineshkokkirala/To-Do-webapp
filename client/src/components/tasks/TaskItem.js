@@ -13,7 +13,9 @@ const TaskItem = ({ eachtask }) => {
   };
 
   /*const di = new DateDiff(date, expires);
-  console.log(di.days());*/
+  console.log(di.days());
+  const formatDate = date.toISOString().subString(0, 10);
+  console.log(formatDate);*/
 
   return (
     <div className={"card bg-" + (percentage < 100 ? "light" : "success")}>

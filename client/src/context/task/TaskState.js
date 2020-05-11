@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import TaskContext from "./taskContext";
 import taskReducer from "./taskReducer";
-import uuid from "react-uuid";
+//import uuid from "react-uuid";
 import axios from "axios";
 
 import {
@@ -69,7 +69,7 @@ const TaskState = (props) => {
   //Delete task
   const deleteTask = async (id) => {
     try {
-      const res = await axios.delete(`/api/tasks/${id}`);
+      await axios.delete(`/api/tasks/${id}`);
       dispatch({ type: DELETE_TASK, payload: id });
     } catch (err) {
       dispatch({ type: TASK_ERROR, payload: err.response.msg });
