@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/auth/authContext";
 
-const Login = () => {
+const Login = (props) => {
+  const authContext = useContext(AuthContext);
+  const { login, isAuthenticated, error, clearErrors } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+
+    if (error === "Invalid Credentials") {
+      alert(error);
+      clearErrors();
+    }
+    //eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -13,7 +29,12 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("Login Submited");
+    login({
+      email,
+      password,
+    });
+
+    //console.log("Login Submited");
   };
 
   return (
@@ -24,7 +45,13 @@ const Login = () => {
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" value={email} onChange={onChange} />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
@@ -33,6 +60,7 @@ const Login = () => {
             name="password"
             value={password}
             onChange={onChange}
+            required
           />
         </div>
         <input
