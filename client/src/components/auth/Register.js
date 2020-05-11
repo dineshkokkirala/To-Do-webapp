@@ -1,9 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 //import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
+import { CLEAR_ERRORS } from "../../context/types";
 
 const Register = () => {
   /* const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;*/
+  const authContext = useContext(AuthContext);
+
+  const { register, error, clearErrors } = authContext;
+
+  useEffect(() => {
+    if (error === "User already exists") {
+      alert("User is already exists");
+      clearErrors();
+    }
+  }, [error]);
 
   const [user, setUser] = useState({
     name: "",
@@ -26,7 +38,16 @@ const Register = () => {
     } else {
       console.log("Register Submit");
     }*/
-    console.log("Register submit");
+    if (password2 !== password) {
+      alert("Passwords do not match");
+    } else {
+      //console.log("Register submit");
+      register({
+        name,
+        email,
+        password,
+      });
+    }
   };
 
   return (
@@ -38,11 +59,23 @@ const Register = () => {
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" value={name} onChange={onChange} />
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" value={email} onChange={onChange} />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
@@ -51,6 +84,8 @@ const Register = () => {
             name="password"
             value={password}
             onChange={onChange}
+            required
+            minLength="6"
           />
         </div>
         <div className="form-group">
@@ -60,6 +95,7 @@ const Register = () => {
             name="password2"
             value={password2}
             onChange={onChange}
+            required
           />
         </div>
         <input

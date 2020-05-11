@@ -10,7 +10,7 @@ import Login from "./components/auth/Login";
 
 import TaskState from "./context/task/TaskState";
 import AuthState from "./context/auth/AuthState";
-import AlertState from "./context/alert/AlertState";
+//import AlertState from "./context/alert/AlertState";
 
 const App = () => {
   return (
