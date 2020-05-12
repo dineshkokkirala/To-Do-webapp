@@ -18,7 +18,11 @@ const TaskItem = ({ eachtask }) => {
   console.log(formatDate);*/
 
   return (
-    <div className={"card bg-light"}>
+    <div
+      className={
+        "card bg-" + (percentage === "Completed" ? "success" : "light")
+      }
+    >
       <h3 className="text-primary text-left">
         {task}{" "}
         <span
@@ -38,8 +42,12 @@ const TaskItem = ({ eachtask }) => {
         <strong>Due Date: </strong>
         {expires.slice(0, 10)}
         <br />
-        <strong>Progress: </strong>
-        {percentage}%
+        {percentage && (
+          <div>
+            <strong>Status: </strong>
+            {percentage}
+          </div>
+        )}
       </ul>
       <p>
         <button className="btn btn-danger btn-sm" onClick={onDelete}>

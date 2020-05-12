@@ -45,7 +45,7 @@ const TaskForm = () => {
       task: "",
       type: "personal",
       expires: "",
-      percentage: "",
+      percentage: "New",
     });
   };
 
@@ -87,13 +87,13 @@ const TaskForm = () => {
         value={expires}
         required
       />
-      <h4>Progress:</h4>
-      <input
-        type="number"
-        value={percentage}
-        name="percentage"
-        onChange={onChange}
-      />
+      <h4>Status:</h4>
+      <select value={percentage} name="percentage" onChange={onChange} required>
+        <option>Select Status</option>
+        <option>New</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+      </select>
       <div>
         <input
           type="submit"
@@ -114,3 +114,10 @@ const TaskForm = () => {
 };
 
 export default TaskForm;
+
+/*<input
+type="number"
+value={percentage}
+name="percentage"
+onChange={onChange}
+/>*/
