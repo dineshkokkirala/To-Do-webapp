@@ -18,7 +18,7 @@ const TaskItem = ({ eachtask }) => {
   console.log(formatDate);*/
 
   return (
-    <div className={"card bg-" + (percentage < 100 ? "light" : "success")}>
+    <div className={"card bg-light"}>
       <h3 className="text-primary text-left">
         {task}{" "}
         <span
@@ -33,25 +33,15 @@ const TaskItem = ({ eachtask }) => {
       </h3>
       <ul className="list">
         <strong>Created Date: </strong>
-        {date}
+        {date.slice(0, 10)}
         <br />
         <strong>Due Date: </strong>
-        {expires}
+        {expires.slice(0, 10)}
         <br />
-        {percentage && (
-          <li className={percentage <= 10 && "text-danger"}>
-            <strong>Progress: </strong>
-            {percentage}%
-          </li>
-        )}
+        <strong>Progress: </strong>
+        {percentage}%
       </ul>
       <p>
-        <button
-          className="btn btn-dark btn-sm"
-          onClick={() => taskContext.setCurrent(eachtask)}
-        >
-          Update Task
-        </button>
         <button className="btn btn-danger btn-sm" onClick={onDelete}>
           Delete
         </button>
@@ -65,3 +55,10 @@ TaskItem.propTypes = {
 };
 
 export default TaskItem;
+
+/*<button
+className="btn btn-dark btn-sm"
+onClick={() => taskContext.setCurrent(eachtask)}
+>
+Update Task
+</button>*/

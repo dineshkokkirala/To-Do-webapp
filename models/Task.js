@@ -18,7 +18,6 @@ const TaskSchema = mongoose.Schema({
   },
   percentage: {
     type: String,
-    default: "0",
   },
   expires: {
     type: Date,

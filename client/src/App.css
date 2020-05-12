@@ -2,11 +2,12 @@
 
 /* Global Styles */
 :root {
-  --primary-color: #182069;
+  --primary-color: #4abdac;
   --dark-color: #333333;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --card-color: #28a745;
 }
 
 * {

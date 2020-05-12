@@ -32,7 +32,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { task, type, date, expires } = req.body;
+    const { task, type, date, expires, percentage } = req.body;
 
     try {
       const newTask = new Task({
@@ -40,6 +40,7 @@ router.post(
         type,
         date,
         expires,
+        percentage,
         user: req.user.id,
       });
 
