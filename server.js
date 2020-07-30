@@ -6,11 +6,12 @@ const connectDB = require("./config/db");
 connectDB();
 
 //init middleware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
-app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/tasks", require("./routes/api/tasks"));
+app.use("/api/users", require("./routes/api/users"));
+
 
 const port = process.env.PORT || 5000;
 
